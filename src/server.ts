@@ -5,6 +5,7 @@ import { createServer } from 'http';
 import compression from 'compression';
 import cors from 'cors';
 import schema from './schema';
+import path from 'path';
 
 const app = express();
 const server = new ApolloServer({
@@ -14,10 +15,17 @@ const server = new ApolloServer({
 
 app.use('*', cors());
 app.use(compression());
-server.applyMiddleware({ app, path: '/' });
+
+// to serve the root page
+app.use('/', express.static(path.join(__dirname, 'static')));
+
+// to serve the /graphql content
+server.applyMiddleware({ app, path: '/graphql' });
 
 const httpServer = createServer(app);
 
 httpServer.listen({ port: 8080 }, (): void =>
-  console.log(`🚀 GraphQL is now running on http://localhost:8080/`),
+  console.log(
+    'X-Files GraphQL is now running on http://localhost:8080/graphql',
+  ),
 );
