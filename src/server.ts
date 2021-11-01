@@ -19,8 +19,13 @@ app.use(compression());
 // to serve the root page
 app.use('/', express.static(path.join(__dirname, 'static')));
 
-// to serve the /graphql content
+// the actual GraphQL API
 server.applyMiddleware({ app, path: '/graphql' });
+
+// the catch all route
+app.use((_, res) => {
+  res.redirect('/');
+});
 
 const httpServer = createServer(app);
 
