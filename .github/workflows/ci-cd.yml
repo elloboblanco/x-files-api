@@ -16,6 +16,9 @@ jobs:
       matrix:
         node-version: [14.x]
     
+    env:
+      VERSION_LABEL: ${{ github.ref_name }}-${{ github.sha }}
+      
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v2
@@ -33,7 +36,7 @@ jobs:
         run: npm run build
         
       - name: Generate Artifact
-        run: zip -r $GITHUB_REF_NAME-$GITHUB_SHA.zip . -x '*.git*'
+        run: zip -r $VERSION_LABEL.zip . -x "*.git*"
         
       - name: Deploy to AWS Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v20
@@ -42,6 +45,6 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: X-Files-API
           environment_name: X-Files-API-Environment
-          version_label: $GITHUB_REF_NAME-$GITHUB_SHA
+          version_label: ${{ env.VERSION_LABEL }}
           region: us-west-2
-          deployment_package: $GITHUB_REF_NAME-$GITHUB_SHA.zip
+          deployment_package: ${{ env.VERSION_LABEL }}.zip
