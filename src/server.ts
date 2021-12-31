@@ -11,6 +11,19 @@ const app = express();
 const server = new ApolloServer({
   schema,
   validationRules: [depthLimit(7)],
+  playground: {
+    tabs: [
+      {
+        query: `query {
+          episodes(mythArc: true) {
+            id
+            airDate
+            title
+          }
+        }`
+      }
+    ]
+  }
 });
 
 app.use('*', cors());
