@@ -1,14 +1,14 @@
-import { IResolverObject, IResolvers } from 'graphql-tools';
-import { Season, Episode } from './types';
+import { IObjectTypeResolver, IResolvers } from '@graphql-tools/utils';
 import { seasons } from './data';
+import { Episode, Season } from './types';
 
-const seasonResolver: IResolverObject<void, void, { id: string }> = {
+const seasonResolver: IObjectTypeResolver<void, void, { id: string }> = {
   season: (_, { id }): Season => {
     return seasons[parseInt(id) - 1];
   },
 };
 
-const episodesResolver: IResolverObject<void, void, { mythArc?: boolean }> = {
+const episodesResolver: IObjectTypeResolver<void, void, { mythArc?: boolean }> = {
   episodes: (_, { mythArc }): Episode[] => {
     return seasons.flatMap((season) => {
       return season.episodes.filter((episode) => {
