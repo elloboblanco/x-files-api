@@ -1,13 +1,17 @@
 service: x-files-api
 frameworkVersion: "3"
-
+plugins:
+  - serverless-domain-manager
 provider:
   name: aws
   stage: dev
   region: us-west-2
   runtime: nodejs16.x
   stackName: x-files-api
-
+  stackTags:
+    Name: x-files-api
+  tags:
+    Name: x-files-api
 functions:
   graphql:
     handler: dist/server.graphqlHandler
@@ -20,3 +24,14 @@ functions:
           path: /graphql
           method: get
           cors: true
+custom:
+  customDomain:
+    domainName: x-files.dev
+    stage: dev
+    certificateName: x-files.dev
+    createRoute53Record: true
+    createRoute53IPv6Record: true
+    endpointType: REGIONAL
+    securityPolicy: tls_1_2
+    apiType: rest
+    autoDomain: false
