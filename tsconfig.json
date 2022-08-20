@@ -3,5 +3,5 @@
     "outDir": "dist",
     "rootDir": "src",
   },
-  "extends": "@tsconfig/node14/tsconfig.json"
+  "extends": "@tsconfig/node16/tsconfig.json"
 }

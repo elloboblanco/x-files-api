@@ -10,20 +10,6 @@ import {
   Nine,
   Ten,
   Eleven,
-} from './episodes/seasons';
+} from "./episodes/seasons";
 
-const seasons = [
-  One,
-  Two,
-  Three,
-  Four,
-  Five,
-  Six,
-  Seven,
-  Eight,
-  Nine,
-  Ten,
-  Eleven,
-];
-
-export { seasons };
+export const seasons = [One, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Eleven];

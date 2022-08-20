@@ -1,0 +1,24 @@
+service: x-files-api
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  stage: dev
+  region: us-west-2
+  runtime: nodejs16.x
+  profile: fosterizo
+  stackName: x-files-api
+
+functions:
+  graphql:
+    # this is formatted as <FILENAME>.<HANDLER>
+    handler: dist/server.graphqlHandler
+    events:
+      - http:
+          path: /graphql
+          method: post
+          cors: true
+      - http:
+          path: /graphql
+          method: get
+          cors: true

@@ -1,14 +1,28 @@
-import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
-import { loadSchemaSync } from '@graphql-tools/load';
-import { addResolversToSchema } from '@graphql-tools/schema';
-import { join } from 'path';
-import resolvers from './resolvers';
+import { gql } from "apollo-server-lambda";
 
-const schema = loadSchemaSync(join(__dirname, 'schema/schema.graphql'), { loaders: [new GraphQLFileLoader()] })
+export const typeDefs = gql`
+  type Query {
+    hello: String
+    season(id: ID!): Season
+    episodes(mythArc: Boolean): [Episode]!
+  }
 
-const schemaWithResolvers = addResolversToSchema({
-  schema,
-  resolvers
-})
+  type Season {
+    id: ID!
+    episodes: [Episode]!
+  }
 
-export default schemaWithResolvers;
+  type Episode {
+    id: ID!
+    season: ID!
+    seasonId: ID!
+    title: String!
+    mythArc: Boolean!
+    director: String!
+    writer: String!
+    airDate: String!
+    productionCode: String!
+    usViewers: Float
+    summary: String!
+  }
+`;
