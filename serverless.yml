@@ -6,12 +6,10 @@ provider:
   stage: dev
   region: us-west-2
   runtime: nodejs16.x
-  profile: fosterizo
   stackName: x-files-api
 
 functions:
   graphql:
-    # this is formatted as <FILENAME>.<HANDLER>
     handler: dist/server.graphqlHandler
     events:
       - http:
