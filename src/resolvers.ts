@@ -7,12 +7,10 @@ export const resolvers = {
       return "🛸 x-files-api 🛸";
     },
     season: (_: unknown, { id }: { id: string }): Season => {
-      console.log(id);
       return seasons[parseInt(id) - 1];
     },
 
     episodes: (_: unknown, { mythArc }: { mythArc: boolean | undefined }): Episode[] => {
-      console.log(mythArc);
       return seasons.flatMap((season) => {
         return season.episodes.filter((episode) => {
           if (mythArc !== undefined) {

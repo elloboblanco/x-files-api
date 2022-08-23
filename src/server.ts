@@ -19,8 +19,6 @@ export const binary = async (event: any, context: any) => {
   if (!event.path.startsWith("/binary/")) {
     throw new Error(`[404] Invalid filepath for this resource`);
   }
-  console.log(staticFiles);
-  console.log(event.path);
   return staticFileHandler.get(event, context);
 };
 
