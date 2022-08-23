@@ -1,7 +1,28 @@
 service: x-files-api
 frameworkVersion: "3"
+
 plugins:
+  - serverless-offline
+  - serverless-aws-static-file-handler/plugins/BinaryMediaTypes
   - serverless-domain-manager
+
+custom:
+  apiGateway:
+    binaryMediaTypes:
+      - image/png
+      - image/jpeg
+      - "*/*"
+  customDomain:
+    domainName: x-files.dev
+    stage: dev
+    certificateName: x-files.dev
+    createRoute53Record: true
+    createRoute53IPv6Record: true
+    endpointType: REGIONAL
+    securityPolicy: tls_1_2
+    apiType: rest
+    autoDomain: false
+
 provider:
   name: aws
   stage: dev
@@ -12,7 +33,20 @@ provider:
     Name: x-files-api
   tags:
     Name: x-files-api
+
 functions:
+  html:
+    handler: dist/server.html
+    events:
+      - http:
+          path: /
+          method: get
+  binary:
+    handler: dist/server.binary
+    events:
+      - http:
+          path: /binary/{foo+}
+          method: get
   graphql:
     handler: dist/server.graphql
     events:
@@ -24,21 +58,3 @@ functions:
           path: /graphql
           method: get
           cors: true
-  home:
-    handler: dist/server.home
-    events:
-      - http:
-          path: /{foo+}
-          method: get
-          cors: true
-custom:
-  customDomain:
-    domainName: x-files.dev
-    stage: dev
-    certificateName: x-files.dev
-    createRoute53Record: true
-    createRoute53IPv6Record: true
-    endpointType: REGIONAL
-    securityPolicy: tls_1_2
-    apiType: rest
-    autoDomain: false

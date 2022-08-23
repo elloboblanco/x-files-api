@@ -4,8 +4,9 @@
   "description": "An X-Files GraphQL API",
   "main": "dist/server.js",
   "scripts": {
+    "start": "serverless offline",
     "invoke": "serverless invoke local -f graphql -p query.json",
-    "build": "tsc --build && cp -R ./src/static dist",
+    "build": "rimraf dist && tsc --build && cp -R ./src/static dist",
     "format": "prettier --write .",
     "invoke:home": "serverless invoke local -f home -p home.json",
     "invoke:home:asset": "serverless invoke local -f home -p png.json",
@@ -27,16 +28,17 @@
   },
   "homepage": "https://github.com/elloboblanco/x-files-api#readme",
   "dependencies": {
-    "@vendia/serverless-express": "^4.10.1",
     "apollo-server-lambda": "^3.10.1",
-    "express": "^4.18.1",
-    "graphql": "^16.6.0"
+    "graphql": "^16.6.0",
+    "serverless-aws-static-file-handler": "^4.0.0"
   },
   "devDependencies": {
     "@tsconfig/node16": "^1.0.3",
     "@types/node": "^18.7.9",
     "prettier": "^2.7.1",
+    "rimraf": "^3.0.2",
     "serverless-domain-manager": "^6.1.0",
+    "serverless-offline": "^9.2.6",
     "typescript": "^4.7.4"
   },
   "engines": {
