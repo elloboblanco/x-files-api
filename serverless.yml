@@ -28,7 +28,7 @@ functions:
     handler: dist/server.home
     events:
       - http:
-          path: /
+          path: /{foo+}
           method: get
           cors: true
 custom:
