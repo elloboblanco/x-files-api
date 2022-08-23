@@ -1,4 +1,4 @@
-import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
+import { ApolloServerPluginLandingPageLocalDefault } from "apollo-server-core";
 import { ApolloServer } from "apollo-server-lambda";
 import { resolvers } from "./resolvers";
 import { typeDefs } from "./schema";
@@ -25,11 +25,25 @@ export const binary = async (event: any, context: any) => {
 };
 
 // to serve /graphql
+const defaultQuery = `
+query episodes {
+  episodes(mythArc: true) {
+    id
+    title
+  }
+}`;
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   csrfPrevention: true,
   cache: "bounded",
-  plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+  plugins: [
+    ApolloServerPluginLandingPageLocalDefault({
+      footer: false,
+      document: defaultQuery,
+      embed: true,
+    }),
+  ],
 });
 export const graphql = server.createHandler();
