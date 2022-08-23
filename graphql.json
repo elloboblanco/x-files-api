@@ -1,6 +1,6 @@
 {
   "httpMethod": "POST",
-  "path": "/",
+  "path": "/graphql",
   "headers": {
     "content-type": "application/json"
   },
