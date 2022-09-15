@@ -54,6 +54,9 @@ functions:
           path: /graphql
           method: post
           cors: true
+  graphiql:
+    handler: dist/server.graphiql
+    events:
       - http:
           path: /graphql
           method: get

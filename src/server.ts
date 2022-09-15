@@ -1,4 +1,4 @@
-import { ApolloServerPluginLandingPageLocalDefault } from "apollo-server-core";
+import { ApolloServerPluginLandingPageDisabled } from "apollo-server-core";
 import { ApolloServer } from "apollo-server-lambda";
 import { resolvers } from "./resolvers";
 import { typeDefs } from "./schema";
@@ -22,7 +22,7 @@ export const binary = async (event: any, context: any) => {
   return staticFileHandler.get(event, context);
 };
 
-// to serve /graphql
+// to serve POST /graphql
 const defaultQuery = `
 query episodes {
   episodes(mythArc: true) {
@@ -36,12 +36,12 @@ const server = new ApolloServer({
   resolvers,
   csrfPrevention: true,
   cache: "bounded",
-  plugins: [
-    ApolloServerPluginLandingPageLocalDefault({
-      footer: false,
-      document: defaultQuery,
-      embed: true,
-    }),
-  ],
+  plugins: [ApolloServerPluginLandingPageDisabled()],
 });
 export const graphql = server.createHandler();
+
+// to serve GET /graphql
+export const graphiql = async (event: any, context: any) => {
+  event.path = "graphiql.html";
+  return staticFileHandler.get(event, context);
+};
